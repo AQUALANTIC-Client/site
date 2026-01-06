@@ -17,6 +17,24 @@
           }
         }
 
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        @keyframes gradient-text {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         :root {
             --background: #0a192f;
             --text: #ccd6f6;
@@ -46,16 +64,27 @@
             overflow: hidden;
         }
 
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+            animation: float 10s ease-in-out infinite;
+            z-index: -1;
+        }
+
         .hero h1 {
-            font-size: 8rem;
+            font-size: clamp(3rem, 13vw, 8rem);
             font-weight: 800;
             margin: 0;
-            letter-spacing: -5px;
+            letter-spacing: -0.04em;
             line-height: 1;
-            background: linear-gradient(180deg, #fff, var(--text));
+            background: linear-gradient(45deg, #fff, var(--primary), #fff);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1) forwards, gradient-text 5s ease infinite;
             opacity: 0;
         }
 
@@ -78,15 +107,35 @@
             font-weight: 600;
             border-radius: 8px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+            z-index: -1;
         }
 
         .btn:hover {
-            background-color: rgba(37, 99, 235, 0.1);
+            color: #fff;
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        .btn:hover::before {
+            width: 100%;
         }
 
         /* --- Hero-specific Button Animation --- */
         .hero .btn {
-            animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards, pulse-glow 2s infinite;
             opacity: 0;
         }
 
@@ -114,6 +163,27 @@
             text-align: center;
             margin-bottom: 4rem;
             color: #fff;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            transform: translateX(-50%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .section:hover .section-title::after {
+            width: 100px;
         }
 
         .grid {
@@ -141,6 +211,7 @@
         .card h3 {
             margin-top: 0;
             position: relative; z-index: 2;
+            transition: color 0.3s ease;
         }
         .card p, .card .version, .card .price, .card .btn, .card .stars, .card small, .card img {
             position: relative; z-index: 2;
@@ -195,6 +266,10 @@
             background-position: 100% 0; /* ホバー時に光沢が流れる */
         }
 
+        .card:hover h3 {
+            color: var(--primary);
+        }
+
         .card::after {
             content: '';
             position: absolute;
@@ -219,14 +294,26 @@
             color: var(--secondary);
         }
 
+        .card.soon .btn::before {
+            display: none;
+        }
+
         .card.soon .btn:hover {
             background-color: transparent;
+            color: var(--secondary);
+            box-shadow: none;
         }
 
         .media-grid img {
             width: 100%;
             border-radius: 12px;
             border: 1px solid #1d3b61;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .media-grid img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
         .review-card .stars {
@@ -276,23 +363,23 @@
             <h2 class="section-title">Plans</h2>
             <div class="grid">
                  <div class="card soon">
-                    <h3>AQUALANTIC MCP</h3>
+                    <h3>MCP</h3>
                     <p>Better Optimization and Bypass.</p>
-                    <div class="version">1.8.9 or 1.2X (TBD)</div>
+                    <div class="version">1.8.9</div>
                     <div class="price">$80</div>
-                    <a class="btn">Soon</a>
+                    <a class="btn">In Development</a>
                 </div>
                 <div class="card">
-                    <h3>AQUALANTIC FML</h3>
+                    <h3>FML</h3>
                     <p>Good Bypass and Render.</p>
                     <div class="version">1.8.9</div>
                     <div class="price">Free</div>
                     <a href="https://github.com/kanmimimu/AQUALANTIC/releases/latest" class="btn">Download</a>
                 </div>
                 <div class="card soon">
-                    <h3>AQUALANTIC Lite</h3>
+                    <h3>AQUAVanish</h3>
                     <p>Undetectable Ghost Client.</p>
-                    <div class="version">1.8.9 / Latest Fabric</div>
+                    <div class="version">1.20~ Forge/Fabric</div>
                     <div class="price">$150</div>
                     <a class="btn">Soon</a>
                 </div>
@@ -351,7 +438,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 aqualantic.com. All rights reserved.</p>
+        <p>&copy; 2025-2026 aqualantic.com. All rights reserved.</p>
         <p>
             <a href="mailto:contact@aqualantic.com">Contact Us</a>
             <span style="margin: 0 10px;">|</span>

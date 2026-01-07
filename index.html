@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,33 +9,94 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* --- Animations --- */
         @keyframes liquid-glass-shine {
-          0% {
-            background-position: -200% 0;
-          }
-          100% {
-            background-position: 200% 0;
-          }
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         @keyframes pulse-glow {
-            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
         }
 
         @keyframes gradient-text {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0 50%;
+            }
         }
 
+        @keyframes slide-in {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes type-cursor {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: var(--primary);
+            }
+        }
+
+        @keyframes type-text {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        /* --- Variables --- */
         :root {
             --background: #0a192f;
             --text: #ccd6f6;
@@ -43,16 +105,143 @@
             --glow: rgba(37, 99, 235, 0.15);
             --card-bg: #112240;
             --card-bg-transparent: rgba(17, 34, 64, 0.8);
+            --header-height: 80px;
+            --mouse-x: -500px;
+            --mouse-y: -500px;
         }
 
+        /* --- Global Styles --- */
         body {
             background-color: var(--background);
             color: var(--text);
             font-family: 'Inter', sans-serif;
             margin: 0;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+
+
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background: rgba(10, 25, 47, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links .discord-link {
+            display: flex;
+            align-items: center;
+            color: var(--secondary);
+            transition: color 0.3s ease;
+        }
+
+        .nav-links .discord-link:hover {
+            color: #5865F2;
+        }
+
+        .nav-links .discord-link svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #050d1a;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer .logo {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        footer .copyright {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+
+        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -62,14 +251,14 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            padding-top: var(--header-height);
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+            inset: -50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 60%);
             animation: float 10s ease-in-out infinite;
             z-index: -1;
         }
@@ -88,15 +277,25 @@
             opacity: 0;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--secondary);
+        .hero-subtitle-container {
+            display: inline-block;
             margin: 1rem 0 2rem 0;
             animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             opacity: 0;
         }
 
-        /* --- Global Button Styles --- */
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid var(--primary);
+            width: 0;
+            animation: type-text 3s steps(80) 1s forwards, type-cursor 0.75s step-end infinite;
+        }
+
+        /* --- Buttons --- */
         .btn {
             display: inline-block;
             padding: 12px 30px;
@@ -110,6 +309,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            cursor: pointer;
         }
 
         .btn::before {
@@ -117,7 +317,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 0%;
+            width: 0;
             height: 100%;
             background-color: var(--primary);
             transition: width 0.3s ease;
@@ -133,14 +333,14 @@
             width: 100%;
         }
 
-        /* --- Hero-specific Button Animation --- */
         .hero .btn {
             animation: slide-in 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards, pulse-glow 2s infinite;
             opacity: 0;
         }
 
+        /* --- Sections --- */
         main {
-            padding: 5rem 2rem;
+            padding: 0 2rem 5rem 2rem;
             max-width: 1200px;
             margin: auto;
         }
@@ -149,7 +349,8 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            margin-bottom: 6rem;
+            margin-bottom: 8rem;
+            scroll-margin-top: 100px;
         }
 
         .section.is-visible {
@@ -164,9 +365,6 @@
             margin-bottom: 4rem;
             color: #fff;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .section-title::after {
@@ -192,6 +390,7 @@
             gap: 2rem;
         }
 
+        /* --- Cards --- */
         .card {
             background: var(--card-bg-transparent);
             backdrop-filter: blur(10px);
@@ -202,42 +401,38 @@
             position: relative;
             overflow: hidden;
             text-align: center;
-            /* LiquidGlassの光沢アニメーション */
             background-image: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
             background-size: 200% 100%;
-            background-position: -100% 0; /* 初期位置 */
+            background-position: -100% 0;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(37, 99, 235, 0.5);
+            border-color: var(--primary);
+            background-position: 100% 0;
         }
 
         .card h3 {
             margin-top: 0;
-            position: relative; z-index: 2;
-            transition: color 0.3s ease;
-        }
-        .card p, .card .version, .card .price, .card .btn, .card .stars, .card small, .card img {
-            position: relative; z-index: 2;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s;
         }
 
-        .section#features .card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .section#features .card h3 {
-            margin-top: 0;
-            margin-bottom: 0;
+        .card:hover h3 {
+            color: var(--primary);
         }
 
-        .card .version {
-            color: var(--secondary);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        .card .price {
-            color: var(--secondary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 0.5rem 0 1.5rem 0;
+        .card p,
+        .card .version,
+        .card .price,
+        .card .btn,
+        .card .stars,
+        .card small,
+        .card img {
+            position: relative;
+            z-index: 2;
         }
 
         .card::before {
@@ -257,17 +452,6 @@
 
         .card:hover::before {
             opacity: 1;
-        }
-
-        .card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(37, 99, 235, 0.5);
-            border-color: var(--primary);
-            background-position: 100% 0; /* ホバー時に光沢が流れる */
-        }
-
-        .card:hover h3 {
-            color: var(--primary);
         }
 
         .card::after {
@@ -299,70 +483,263 @@
         }
 
         .card.soon .btn:hover {
-            background-color: transparent;
+            background: transparent;
             color: var(--secondary);
             box-shadow: none;
         }
 
+        .version {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .price {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0 1.5rem 0;
+        }
+
+        /* --- Marquee (Features) --- */
+        .marquee-wrapper {
+            overflow: hidden;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            padding: 2rem 0;
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 2rem;
+            width: max-content;
+            animation: marquee 40s linear infinite;
+        }
+
+        .marquee-content .card {
+            min-width: 300px;
+            flex-shrink: 0;
+            margin: 0;
+            /* Override any defaults */
+        }
+
+
+
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* --- FAQ Accordion --- */
+        .accordion {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .accordion-item {
+            background: var(--card-bg-transparent);
+            border: 1px solid rgba(29, 59, 97, 0.5);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .accordion-item:hover {
+            border-color: var(--primary);
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: inherit;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active::after {
+            transform: rotate(45deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            color: var(--secondary);
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .accordion-header.active+.accordion-body {
+            padding-bottom: 1.5rem;
+            max-height: 200px;
+        }
+
+        /* --- Media Lightbox --- */
         .media-grid img {
             width: 100%;
             border-radius: 12px;
             border: 1px solid #1d3b61;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
         }
 
         .media-grid img:hover {
             transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
-        
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(37, 99, 235, 0.3);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--primary);
+        }
+
+        /* --- Reviews --- */
         .review-card .stars {
             color: #f59e0b;
             font-size: 1.25rem;
             margin-bottom: 1rem;
         }
 
-        footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid #1d3b61;
-            color: var(--secondary);
+        /* --- Back to Top --- */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 900;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border: none;
         }
 
-        footer a {
-            color: var(--secondary);
-            text-decoration: none;
-            transition: color 0.3s;
+        #back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
         }
 
-        footer a:hover {
-            color: var(--primary);
+        #back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--glow);
         }
-
-        /* Keyframes */
-        @keyframes slide-in {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
     </style>
 </head>
+
 <body>
 
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- Custom Cursor (Removed) -->
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">AQUALANTIC</a>
+        <ul class="nav-links">
+            <li><a href="#plans">Plans</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#media">Media</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li>
+                <a href="https://discord.gg/" target="_blank" class="discord-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z" />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <!-- Hero -->
     <div class="hero">
         <h1>AQUALANTIC</h1>
-        <p>The ultimate Minecraft mod to enhance your gameplay.</p>
+        <div class="hero-subtitle-container">
+            <p>Unleash your true potential. Dominate the game with unparalleled precision.</p>
+        </div>
         <div>
             <a href="https://github.com/AQUALANTIC-Client" class="btn">Download Now</a>
         </div>
     </div>
 
+    <!-- Main Content -->
     <main>
+        <!-- Plans -->
         <section class="section" id="plans">
             <h2 class="section-title">Plans</h2>
             <div class="grid">
-                 <div class="card soon">
+                <div class="card soon">
                     <h3>MCP</h3>
                     <p>Better Optimization and Bypass.</p>
                     <div class="version">1.8.9</div>
@@ -379,56 +756,208 @@
                 <div class="card soon">
                     <h3>AQUAVanish</h3>
                     <p>Undetectable Ghost Client.</p>
-                    <div class="version">1.20~ Forge/Fabric</div>
+                    <div class="version">1.20+ Forge/Fabric</div>
                     <div class="price">$150</div>
                     <a class="btn">Soon</a>
                 </div>
             </div>
         </section>
 
+        <!-- Features (Tabbed) -->
+        <!-- Features (Marquee) -->
         <section class="section" id="features">
             <h2 class="section-title">Features</h2>
-            <div class="grid">
-                <div class="card"><h3>⚡ Good Bypasses</h3></div>
-                <div class="card"><h3>🤗 Active Development</h3></div>
-                <div class="card"><h3>🛡️ Safe & Secure</h3></div>
+            <div class="marquee-wrapper">
+                <div class="marquee-content">
+                    <!-- Set 1 -->
+                    <div class="card"><span class="feature-icon">⚔️</span>
+                        <h3>KillAura</h3>
+                        <p>Advanced aura with customizable rotations.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">👊</span>
+                        <h3>Velocity</h3>
+                        <p>Adjustable knockback reduction.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🎯</span>
+                        <h3>AimAssist</h3>
+                        <p>Subtle assistance for legit gameplay.</p>
+                    </div>
+
+                    <div class="card"><span class="feature-icon">🚀</span>
+                        <h3>Flight</h3>
+                        <p>Fly naturally on various servers.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">⚡</span>
+                        <h3>Speed</h3>
+                        <p>Speed modes optimized for various anti-cheats.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🕷️</span>
+                        <h3>NoSlow</h3>
+                        <p>Eat and block while moving.</p>
+                    </div>
+
+                    <div class="card"><span class="feature-icon">👁️</span>
+                        <h3>ESP</h3>
+                        <p>See players and entities through walls.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🎨</span>
+                        <h3>HUD</h3>
+                        <p>Fully customizable interface.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🌑</span>
+                        <h3>Animation</h3>
+                        <p>Smooth 1.7-style hitting animations.</p>
+                    </div>
+
+                    <div class="card"><span class="feature-icon">🎒</span>
+                        <h3>InvManager</h3>
+                        <p>Automatically sorts your inventory.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">👕</span>
+                        <h3>AutoArmor</h3>
+                        <p>Equips best armor instantly.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">📦</span>
+                        <h3>ChestStealer</h3>
+                        <p>Loots chests in seconds.</p>
+                    </div>
+
+                    <!-- Set 2 (Duplicate for loop) -->
+                    <div class="card"><span class="feature-icon">⚔️</span>
+                        <h3>KillAura</h3>
+                        <p>Advanced aura with customizable rotations.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">👊</span>
+                        <h3>Velocity</h3>
+                        <p>Adjustable knockback reduction.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🎯</span>
+                        <h3>AimAssist</h3>
+                        <p>Subtle assistance for legit gameplay.</p>
+                    </div>
+
+                    <div class="card"><span class="feature-icon">🚀</span>
+                        <h3>Flight</h3>
+                        <p>Fly naturally on various servers.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">⚡</span>
+                        <h3>Speed</h3>
+                        <p>Speed modes optimized for various anti-cheats.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🕷️</span>
+                        <h3>NoSlow</h3>
+                        <p>Eat and block while moving.</p>
+                    </div>
+
+                    <div class="card"><span class="feature-icon">👁️</span>
+                        <h3>ESP</h3>
+                        <p>See players and entities through walls.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🎨</span>
+                        <h3>HUD</h3>
+                        <p>Fully customizable interface.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">🌑</span>
+                        <h3>Animation</h3>
+                        <p>Smooth 1.7-style hitting animations.</p>
+                    </div>
+
+                    <div class="card"><span class="feature-icon">🎒</span>
+                        <h3>InvManager</h3>
+                        <p>Automatically sorts your inventory.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">👕</span>
+                        <h3>AutoArmor</h3>
+                        <p>Equips best armor instantly.</p>
+                    </div>
+                    <div class="card"><span class="feature-icon">📦</span>
+                        <h3>ChestStealer</h3>
+                        <p>Loots chests in seconds.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
+        <!-- Media (Lightbox) -->
         <section class="section" id="media">
             <h2 class="section-title">Media</h2>
             <div class="grid media-grid">
-                <img src="resource/mmclogo.svg" alt="MMC Logo">
-                <img src="https://via.placeholder.com/800x450.png?text=Screenshot+2" alt="Screenshot 2">
+                <img src="https://via.placeholder.com/800x450.png?text=AQUALANTIC+Media" alt="AQUALANTIC Media">
+                <img src="https://via.placeholder.com/800x450.png?text=AQUALANTIC+GUI" alt="GUI Screenshot">
+                <img src="https://via.placeholder.com/800x450.png?text=In-Game+Visuals" alt="In-Game">
             </div>
         </section>
 
+        <!-- FAQ (Accordion) -->
+        <section class="section" id="faq">
+            <h2 class="section-title">FAQ</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">Is this client free?</button>
+                    <div class="accordion-body">
+                        <p>Yes, the FML version is free. While paid plans are currently envisioned for other versions,
+                            pricing is subject to change.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">How do I install AQUALANTIC?</button>
+                    <div class="accordion-body">
+                        <p>A convenient all-in-one launcher to manage all clients is currently being planned!</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Is it safe to play on [Server]?</button>
+                    <div class="accordion-body">
+                        <p>With appropriate module settings, it is possible to bypass protections on any server!
+                            However, please play at your own risk.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">What versions are supported?</button>
+                    <div class="accordion-body">
+                        <p>FML and AQUAVanish support a wide range of versions via mods like ViaForge or ViaFabricPlus!
+                            The MCP version features built-in ViaVersion!</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Is AQUALANTIC a virus?</button>
+                    <div class="accordion-body">
+                        <p>No, it's completely safe. If you're still worried, feel free to check the source code on
+                            GitHub.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews -->
         <section class="section" id="reviews">
             <h2 class="section-title">User Reviews</h2>
             <div class="grid">
                 <div class="card review-card">
                     <div class="stars">★★★★★</div>
-                    <p>“TargetHUDあるのいいね”</p>
+                    <p>“TargetHUD is really nice”</p>
                     <small>- Anonymous1022</small>
                 </div>
                 <div class="card review-card">
                     <div class="stars">★☆☆☆☆</div>
-                    <p>“LiquidのHUD Editor嫌い”</p>
+                    <p>“I hate Liquid's HUD Editor”</p>
                     <small>- Anonymous5013</small>
                 </div>
                 <div class="card review-card">
                     <div class="stars">★★★★★</div>
-                    <p>“中身めっちゃCrossSineやん”</p>
+                    <p>“It's basically CrossSine inside”</p>
                     <small>- Anonymous1022_5013</small>
                 </div>
             </div>
         </section>
 
+        <!-- Team -->
         <section class="section" id="team">
             <h2 class="section-title">Developer</h2>
             <div class="grid" style="max-width: 340px; margin: auto;">
                 <div class="card">
-                    <img src="https://via.placeholder.com/150" alt="Developer" style="border-radius: 50%; margin-bottom: 1rem; border: 2px solid var(--primary);">
+                    <img src="https://via.placeholder.com/150" alt="Developer"
+                        style="border-radius: 50%; margin-bottom: 1rem; border: 2px solid var(--primary);">
                     <h3>hmm-kanmimimu</h3>
                     <p style="color: var(--secondary); margin: 0;">Main Developer</p>
                 </div>
@@ -437,32 +966,42 @@
 
     </main>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025-2026 aqualantic.com. All rights reserved.</p>
-        <p>
-            <a href="mailto:contact@aqualantic.com">Contact Us</a>
-            <span style="margin: 0 10px;">|</span>
-            <a href="tos.html">Terms of Service</a>
-        </p>
+        <div class="logo">AQUALANTIC</div>
+        <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#plans">Plans</a>
+            <a href="tos.html">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="mailto:contact@aqualantic.com">Contact</a>
+        </div>
+        <p class="copyright">&copy; 2025-2026 aqualantic.com. All rights reserved.</p>
     </footer>
 
+    <!-- Back to Top -->
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <!-- Lightbox DOM -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Full view">
+    </div>
+
     <script>
-        // Section reveal on scroll
+        // --- Scroll Observer (Sections) ---
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
+                    // observer.unobserve(entry.target); // Keep observing for re-animations if wanted
                 }
             });
         }, { threshold: 0.1 });
+        sections.forEach(section => observer.observe(section));
 
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Card mouse glow effect
+        // --- Card Mouse Effect ---
         const cards = document.querySelectorAll('.card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -474,7 +1013,81 @@
             });
         });
 
-    </script>
+        // --- Sticky Header & Scroll Progress ---
+        const header = document.getElementById('header');
+        const scrollProgress = document.getElementById('scroll-progress');
+        const backToTop = document.getElementById('back-to-top');
 
+        window.addEventListener('scroll', () => {
+            // Header
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 25, 47, 0.95)';
+                header.style.boxShadow = '0 10px 30px -10px rgba(2, 12, 27, 0.7)';
+            } else {
+                header.style.background = 'rgba(10, 25, 47, 0.85)';
+                header.style.boxShadow = 'none';
+            }
+
+            // Scroll Progress
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+
+            // Back to Top
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+
+
+
+
+        // --- Accordion ---
+        const accordions = document.querySelectorAll('.accordion-header');
+        accordions.forEach(acc => {
+            acc.addEventListener('click', () => {
+                acc.classList.toggle('active');
+                if (acc.classList.contains('active')) {
+                    // Close others if needed (optional)
+                }
+            });
+        });
+
+        // --- Lightbox ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        const mediaImages = document.querySelectorAll('.media-grid img');
+
+        mediaImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // --- Custom Cursor --- (Removed)
+
+    </script>
 </body>
+
 </html>

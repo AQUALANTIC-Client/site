@@ -692,6 +692,49 @@
             transform: translateY(-5px);
             box-shadow: 0 0 20px var(--glow);
         }
+
+        /* --- Mobile Optimization --- */
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0 1.5rem;
+            }
+
+            /* Hide menu links except Discord */
+            .nav-links li:not(:last-child) {
+                display: none;
+            }
+
+            /* Disable complex hover effects on mobile */
+            .card:hover {
+                transform: none;
+            }
+
+            .card:hover::after {
+                transform: skewX(-25deg) translateX(-250%);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            /* Disable typing effect for text wrapping */
+            .hero p {
+                white-space: normal;
+                border-right: none;
+                width: auto;
+                animation: slide-in 1s forwards 0.5s;
+                opacity: 0;
+            }
+
+            .section {
+                padding-bottom: 3rem;
+            }
+        }
     </style>
 </head>
 
@@ -703,8 +746,9 @@
     <!-- Custom Cursor (Removed) -->
 
     <!-- Header -->
-    <header>
+    <header id="header">
         <a href="#" class="logo">AQUALANTIC</a>
+
         <ul class="nav-links">
             <li><a href="#plans">Plans</a></li>
             <li><a href="#features">Features</a></li>
@@ -1084,6 +1128,8 @@
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
+
+
 
         // --- Custom Cursor --- (Removed)
 

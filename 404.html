@@ -189,14 +189,35 @@
             font-size: 0.9rem;
             margin: 0;
         }
+
+        /* --- Mobile Optimization --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 1.5rem;
+            }
+
+            /* Hide menu links except Discord */
+            .nav-links li:not(:last-child) {
+                display: none;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 5rem;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <!-- Header -->
-    <header>
+    <header id="header">
         <a href="index.html" class="logo">AQUALANTIC</a>
+
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li>
@@ -230,6 +251,9 @@
         <p class="copyright">&copy; 2025-2026 aqualantic.com. All rights reserved.</p>
     </footer>
 
+    <script>
+
+    </script>
 </body>
 
 </html>
